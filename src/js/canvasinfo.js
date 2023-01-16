@@ -12,9 +12,25 @@ function rozmiar(){
         if (szerokośćokna > image.width) {
             canvas.width = szerokośćokna * różnicarozdzielczości;
             canvas.height = wysokośćokna * różnicarozdzielczości;
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         }
+    var clientX = 0;
+    var clientY = 0;
+    var offsetX = 0;
+    var offsetY = 0;
+    var getImageData = 0;
+    sx = 0;
+    sy = 0;
 image.onload = function(){
-    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    getImageData(sx, sy)
+    if (sx || sy > 0){
+        xmapy = sx;
+        ymapy = sy;
+    } else {
+    xmapy = clientX - offsetX;
+    ymapy = clientY - offsetY;
+    }
+    ctx.drawImage(image, sx, sy, canvas.width, canvas.height);
 }};
 dostosowanie();
 window.addEventListener("resize", dostosowanie);
