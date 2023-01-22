@@ -1,5 +1,3 @@
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
 var image = new Image();
 image.src = "src/images/mapa.png";
 

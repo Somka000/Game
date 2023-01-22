@@ -1,8 +1,10 @@
+const ctx = document.getElementById("canvas").getContext("2d");
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
 function rozmiar(){
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
     }
-    const ctx = document.getElementById("canvas").getContext("2d");
     var image = new Image();
     image.src = "src/images/mapa.png";
     var szerokośćokna = window.screen.width;
@@ -21,16 +23,26 @@ function rozmiar(){
     var getImageData = 0;
     sx = 0;
     sy = 0;
-image.onload = function(){
-    getImageData(sx, sy)
-    if (sx || sy > 0){
-        xmapy = sx;
-        ymapy = sy;
-    } else {
-    xmapy = clientX - offsetX;
-    ymapy = clientY - offsetY;
-    }
-    ctx.drawImage(image, sx, sy, canvas.width, canvas.height);
-}};
-dostosowanie();
-window.addEventListener("resize", dostosowanie);
+    image.onload = function(){
+        canvas.addEventListener("mousedown", function(e){
+        clientX = e.clientX;
+        clientY = e.clientY;
+        });
+        canvas.addEventListener("mousemove", function(e){
+        if(clientX || clientY > 0){
+        offsetX = e.clientX - clientX;
+        offsetY = e.clientY - clientY;
+        sx += offsetX;
+        sy += offsetY;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, sx, sy, canvas.width, canvas.height);
+        }
+        });
+        canvas.addEventListener("mouseup", function(){
+        clientX = 0;
+        clientY = 0;
+        });
+        }
+        }
+        dostosowanie();
+        window.addEventListener("resize", dostosowanie);
